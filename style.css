@@ -36,6 +36,14 @@ html, body {
 .brand .logo { width: 36px; height: 36px; flex: none; }
 .brand .title { font-weight: 700; font-size: 23px; letter-spacing: 0.3px; }
 
+.model-toggle {
+  display: flex; margin-left: 12px; padding: 3px;
+  background: var(--bg-3); border: 1px solid var(--border); border-radius: 999px;
+  font-size: 12px; font-weight: 600; user-select: none;
+}
+.model-toggle span { padding: 4px 12px; border-radius: 999px; color: var(--fg-dim); cursor: default; }
+.model-toggle span.active { background: var(--accent); color: white; }
+
 .controls { display: flex; align-items: center; gap: 14px; min-width: 0; }
 .controls button, .legend span { white-space: nowrap; }
 
