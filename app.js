@@ -190,7 +190,6 @@
     const stats = isGlobal
       ? [
           [pct(f.frequency), "image frequency"],
-          [f.n_images_active.toLocaleString(), "active images"],
           [f.n_connections, "local connections"],
         ]
       : [
@@ -206,17 +205,17 @@
           ${isGlobal ? "" : `<img class="heat" src="${t.heat}" style="opacity:${heatOpacity}" alt="">`}
         </div>
         <figcaption><b>#${i + 1}</b> ${esc(t.class_name)}<br>${isGlobal
-          ? `z = ${t.activation.toFixed(2)}`
-          : `mean z = ${t.activation.toFixed(3)} &middot; max ${t.max_activation.toFixed(2)}`}</figcaption>
+          ? `activation = ${t.activation.toFixed(2)}`
+          : `mean activation = ${t.activation.toFixed(3)}`}</figcaption>
       </figure>`).join("");
 
     const conns = f.connections.map((c) => `
-      <li data-target="${c.id}" title="C = ${c.C}, strength = ${c.strength}, coverage = ${c.coverage}, lift = ${c.lift}">
+      <li data-target="${c.id}" title="Strength = ${c.strength.toFixed(3)}, Bridge weight = ${c.C.toFixed(3)}">
         <div>
           <div class="name">${esc(c.label)}<span class="uid">${c.id}</span></div>
           <div class="bar ${other}" style="width:${Math.max(4, (100 * c.strength) / maxS)}%"></div>
         </div>
-        <div class="meta">strength ${c.strength.toFixed(3)}<br>C ${c.C.toFixed(3)}</div>
+        <div class="meta">strength ${c.strength.toFixed(3)}</div>
       </li>`).join("");
 
     content.innerHTML = `
@@ -238,7 +237,7 @@
       <div class="images">${images}</div>
       <h3>Connected ${other} concepts (${f.n_connections}), by connection strength</h3>
       <ul class="connections">${conns}</ul>
-      <p class="note">Strength: ${esc(G.meta.strength_definition)}. C: bridge-matrix weight.</p>`;
+      <p class="note">Strength: share of the bridge prediction for the global on images where it fires.</p>`;
 
     content.querySelectorAll(".connections li").forEach((li) =>
       li.addEventListener("click", () => { openConcept(li.dataset.target); focusNode(li.dataset.target); }));
